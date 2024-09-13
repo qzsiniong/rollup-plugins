@@ -5,7 +5,7 @@ import type { Plugin } from 'rollup';
 import type { RollupFilenameOptions } from '../types';
 
 const PREFIX = `\0virtual:`;
-const TYPE_PREFIX = `____`;
+const TYPE_PREFIX = `--`;
 
 export default function filename(modules: RollupFilenameOptions): Plugin {
   const resolvedIds = new Map(Object.entries(modules));
