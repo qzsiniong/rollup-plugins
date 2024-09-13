@@ -1,4 +1,0 @@
-type Hero {
-  id: ID!
-  name: String!
-}

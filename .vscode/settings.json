@@ -1,7 +1,17 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+  "editor.formatOnSave": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.format": "explicit",
+		"source.fixAll.eslint": "explicit"
+	},
   "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
   "typescript.format.insertSpaceAfterConstructor": true,
   "typescript.format.enable": true,
-  "eslint.enable": true
+  "eslint.enable": true,
+  "cSpell.words": [
+    "qinzisong",
+    "qzsiniong"
+  ]
 }

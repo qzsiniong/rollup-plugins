@@ -1,1 +1,0 @@
-../../shared/ava.config.mjs

@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "declaration": true,
-    "noEmit": true,
-    "outDir": "dist"
-  }
-}
