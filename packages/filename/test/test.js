@@ -14,9 +14,12 @@ test('loads __filename from memory', (t) => {
     filename: (s) => s
   });
 
-  const resolved = plugin.resolveId('filename', theFilename);
+  const resolved = plugin.resolveId(
+    'filename',
+    `${theFilename}?vue&type=script&setup=true&lang.ts`
+  );
 
-  t.is(resolved, `\0virtual:filename/${relativeFilename}`);
+  t.is(resolved, `\0virtual:${relativeFilename}?____filename`);
   t.is(plugin.load(resolved), relativeFilename);
 });
 
@@ -27,6 +30,6 @@ test('loads md5(__filename) from memory', (t) => {
 
   const resolved = plugin.resolveId('filename_md5', theFilename);
 
-  t.is(resolved, `\0virtual:filename_md5/${relativeFilename}`);
+  t.is(resolved, `\0virtual:${relativeFilename}?____filename_md5`);
   t.is(plugin.load(resolved), md5(relativeFilename));
 });

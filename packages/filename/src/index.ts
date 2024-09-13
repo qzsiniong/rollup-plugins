@@ -5,7 +5,7 @@ import type { Plugin } from 'rollup';
 import type { RollupFilenameOptions } from '../types';
 
 const PREFIX = `\0virtual:`;
-const IMPORTER_SEP = `/`;
+const TYPE_PREFIX = `____`;
 
 export default function filename(modules: RollupFilenameOptions): Plugin {
   const resolvedIds = new Map(Object.entries(modules));
@@ -16,9 +16,10 @@ export default function filename(modules: RollupFilenameOptions): Plugin {
       if (resolvedIds.has(id)) {
         let importerSuffix = '';
         if (importer) {
-          importerSuffix = IMPORTER_SEP + path.relative(process.cwd(), importer);
+          const filepath = `${importer.replace(/\?.+$/, '')}?${TYPE_PREFIX}${id}`;
+          importerSuffix = path.relative(process.cwd(), filepath);
         }
-        return PREFIX + id + importerSuffix;
+        return PREFIX + importerSuffix;
       }
 
       return null;
@@ -26,15 +27,11 @@ export default function filename(modules: RollupFilenameOptions): Plugin {
 
     load(id) {
       if (id.startsWith(PREFIX)) {
-        const idx = id.indexOf(IMPORTER_SEP);
-        if (idx !== -1) {
-          const idNoPrefix = id.substring(0, idx).slice(PREFIX.length);
-          const importer = id.substring(idx + IMPORTER_SEP.length);
-          const module = resolvedIds.get(idNoPrefix);
+        const [importer, idNoPrefix] = id.slice(PREFIX.length).split(`?${TYPE_PREFIX}`);
+        const module = resolvedIds.get(idNoPrefix);
 
-          if (module) {
-            return module(importer);
-          }
+        if (module) {
+          return module(importer);
         }
       }
 
